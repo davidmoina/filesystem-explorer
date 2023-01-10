@@ -9,7 +9,7 @@
     <title>Drive</title>
 </head>
 <body>
-    <header>
+    <header class="header">
         <div>
             <h1>Drive</h1>
         </div>
@@ -19,13 +19,13 @@
         </div>
     </header>
 
-    <main>
+    <main class="main">
         <aside class="aside-menu">
             <button><i class="fa-solid fa-folder-plus"></i> New folder</button>
             <button><i class="fa-solid fa-file-arrow-up"></i> Upload file</button>
         </aside>
 
-        <section>
+        <section class="files-display">
             <div class="menu-section">
                 <div>
                     <i class="fa-solid fa-house"></i>
@@ -42,15 +42,15 @@
             <div class="route-section">
                 <p>Home/</p>
             </div>
-            <div class="info-header">
-                <p>Name</p>
+            <div class="files-header">
+                <p class="name">Name</p>
                 <p>Last Modified</p>
                 <p>Creation date</p>
                 <p>Size</p>
             </div>
-            <div class="files-section">
-                <div>
-                    <p><i class="fa-solid fa-file"></i> text1.txt</p>
+            <div class="files-body">
+                <div class="file">
+                    <p class="name"><i class="fa-solid fa-file"></i> text1.txt</p>
                     <p>10/01/2023</p>
                     <p>10/01/2023</p>
                     <p>300Kb</p>
