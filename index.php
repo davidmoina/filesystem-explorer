@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <script defer src="https://kit.fontawesome.com/8bbf7b9ae4.js" crossorigin="anonymous"></script>
     <title>Drive</title>
 </head>
+
 <body>
     <header class="header">
         <div>
@@ -22,7 +24,7 @@
     <main class="main">
         <aside class="aside-menu">
             <button><i class="fa-solid fa-folder-plus"></i> New folder</button>
-            <button><i class="fa-solid fa-file-arrow-up"></i> Upload file</button>
+            <button type="file" id="btnUploadFile"><i class="fa-solid fa-file-arrow-up"></i> Upload file</button>
         </aside>
 
         <section class="files-display">
@@ -62,5 +64,7 @@
     <footer>
 
     </footer>
+    <script src="./assets/js/app.js"></script>
 </body>
+
 </html>
