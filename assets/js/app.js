@@ -18,13 +18,17 @@ function uploadFile() {
   })
     .then((res) => res.json())
     .then((data) => {
-      createElementsToShowFilesRoot(
-        data.type,
-        data.name,
-        data.lastModify,
-        data.creationDate,
-        data.size
-      );
+      if (typeof data === "object") {
+        createElementsToShowFilesRoot(
+          data.type,
+          data.name,
+          data.lastModify,
+          data.creationDate,
+          data.size
+        );
+      } else {
+        console.log(data);
+      }
     });
 }
 
@@ -33,7 +37,7 @@ function showFilesRoot() {
   fetch("modules/showFiles.php" + "?" + "path=" + path, {
     method: "GET",
   })
-    .then((resp) => resp.json())
+    .then((res) => res.json())
     .then((data) =>
       data.forEach((file) => {
         createElementsToShowFilesRoot(
@@ -57,14 +61,17 @@ function createElementsToShowFilesRoot(
   filesBodyContainer.insertAdjacentHTML(
     "afterbegin",
     `<div class="file">
-      <p class="name">
-        <i class="${type}"></i> ${name}
-      </p>
-      <p>${lastModify}</p>
-      <p>${creationDate}</p>
-      <p>${size}</p>
-    </div>`
+            <p class="name" data-name=${name}>
+            <i class="${type}"></i> ${name}
+            </p>
+            <p>${lastModify}</p>
+            <p>${creationDate}</p>
+            <p>${size}</p>
+            </div>`
   );
+  document
+    .querySelector(`[data-name="${name}"]`)
+    .addEventListener("click", handleFileOrFolder);
 }
 
 function newFolder() {
@@ -72,4 +79,20 @@ function newFolder() {
     method: "POST",
   });
   // .then(res => res)
+}
+
+function handleFileOrFolder(e) {
+  let elToDelete = e.target.dataset.name;
+
+  fetch("modules/deleteFiles.php" + "?" + "name=" + elToDelete, {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      let divToDelete = document.querySelector(
+        `[data-name="${elToDelete}"]`
+      ).parentElement;
+      divToDelete.remove();
+    });
 }
