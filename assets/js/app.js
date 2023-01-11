@@ -2,10 +2,14 @@ const btnUploadFile = document.getElementById("btnUploadFile");
 const modalShowImg = document.querySelector(".modal-show-img");
 const btnNewFolder = document.getElementById("btnNewFolder");
 const filesBodyContainer = document.querySelector(".files-body");
+const trash = document.querySelector(".fa-trash-can");
+
+let currentFile;
+let beforeCurrentFile;
 
 window.addEventListener("load", showFilesRoot);
 btnUploadFile.addEventListener("change", uploadFile);
-
+trash.addEventListener("click", startDeleteFile);
 btnNewFolder.addEventListener("click", newFolder);
 
 function uploadFile() {
@@ -81,18 +85,40 @@ function newFolder() {
   // .then(res => res)
 }
 
-function handleFileOrFolder(e) {
-  let elToDelete = e.target.dataset.name;
+function startDeleteFile() {
+  deleteFile(currentFile);
+}
 
-  fetch("modules/deleteFiles.php" + "?" + "name=" + elToDelete, {
+function deleteFile(currentFile) {
+  fetch("modules/deleteFiles.php" + "?" + "name=" + currentFile, {
     method: "GET",
   })
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
       let divToDelete = document.querySelector(
-        `[data-name="${elToDelete}"]`
+        `[data-name="${currentFile}"]`
       ).parentElement;
       divToDelete.remove();
     });
+}
+
+function handleFileOrFolder(e) {
+  beforeCurrentFile = currentFile;
+  currentFile = e.target.dataset.name;
+  if (beforeCurrentFile !== currentFile) {
+    document
+      .querySelector(`[data-name="${currentFile}"]`)
+      .parentElement.classList.add("selected-file");
+    if (beforeCurrentFile) {
+      document
+        .querySelector(`[data-name="${beforeCurrentFile}"]`)
+        .parentElement.classList.remove("selected-file");
+    }
+  } else {
+    document
+      .querySelector(`[data-name="${currentFile}"]`)
+      .parentElement.classList.toggle("selected-file");
+  }
+  console.log(currentFile, beforeCurrentFile);
 }

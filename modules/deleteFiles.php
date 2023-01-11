@@ -7,4 +7,6 @@ $url_target = str_replace('\\', '/', $url_insert) . '/' . $name;
 
 unlink($url_target);
 
-echo json_encode("The file $name has been deleted");
+if (file_exists($url_target) === false) {
+    echo json_encode("The file $name has been deleted");
+}

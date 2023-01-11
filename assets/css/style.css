@@ -65,3 +65,7 @@
 #btnUploadFile {
   opacity: 0;
 }
+
+.selected-file {
+  background-color: royalblue;
+}
