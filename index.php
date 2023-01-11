@@ -23,7 +23,7 @@
 
     <main class="main">
         <aside class="aside-menu">
-            <button><i class="fa-solid fa-folder-plus"></i> New folder</button>
+        <button id="btnNewFolder"><i class="fa-solid fa-folder-plus"></i> New folder</button>
             <label for="btnUploadFile"><i class="fa-solid fa-file-arrow-up"></i> Upload file</label>
             <input type="file" name="fileData" id="btnUploadFile">
 
