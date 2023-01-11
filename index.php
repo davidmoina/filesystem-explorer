@@ -53,18 +53,12 @@
                 <p>Size</p>
             </div>
             <div class="files-body">
-                <div class="file">
-                    <p class="name"><i class="fa-solid fa-file"></i> text1.txt</p>
-                    <p>10/01/2023</p>
-                    <p>10/01/2023</p>
-                    <p>300Kb</p>
-                </div>
+
             </div>
         </section>
     </main>
 
     <footer>
-
 
     </footer>
     <script src="./assets/js/app.js?v=<?php echo (rand()); ?>"></script>
