@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css?v=<?php echo (rand()); ?>">
     <script defer src="https://kit.fontawesome.com/8bbf7b9ae4.js" crossorigin="anonymous"></script>
     <title>Drive</title>
 </head>
@@ -24,7 +24,9 @@
     <main class="main">
         <aside class="aside-menu">
             <button><i class="fa-solid fa-folder-plus"></i> New folder</button>
-            <button type="file" id="btnUploadFile"><i class="fa-solid fa-file-arrow-up"></i> Upload file</button>
+            <label for="btnUploadFile"><i class="fa-solid fa-file-arrow-up"></i> Upload file</label>
+            <input type="file" name="fileData" id="btnUploadFile">
+
         </aside>
 
         <section class="files-display">
@@ -63,8 +65,9 @@
 
     <footer>
 
+
     </footer>
-    <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/app.js?v=<?php echo (rand()); ?>"></script>
 </body>
 
 </html>

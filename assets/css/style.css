@@ -1,63 +1,67 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
 }
 
 .main {
-    display: grid;
-    grid-template-columns: 2fr 8fr;
+  display: grid;
+  grid-template-columns: 2fr 8fr;
 }
 
 .aside-menu {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    outline: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  outline: 2px solid black;
 }
 
 .files-display {
-    padding: 10px;
-    outline: 2px solid black;
+  padding: 10px;
+  outline: 2px solid black;
 }
 
 .menu-section {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid grey;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid grey;
 }
 
 .route-section {
-    border-bottom: 1px solid grey;
+  border-bottom: 1px solid grey;
 }
 
 .files-header {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
-.files-header p, .file p {
-    width: 100px;
-
+.files-header p,
+.file p {
+  width: 100px;
 }
 
 .files-header .name {
-    width: 500px;
+  width: 500px;
 }
 
 .files-body .file {
-    display: flex;
-    padding: 5px 0;
-    gap: 20px;
+  display: flex;
+  padding: 5px 0;
+  gap: 20px;
 }
 
 .files-body .file .name {
-    width: 500px;
+  width: 500px;
+}
+
+#btnUploadFile {
+  opacity: 0;
 }
