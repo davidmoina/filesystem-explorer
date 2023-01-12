@@ -17,7 +17,12 @@ if ($handle = opendir(".." . $path)) {
                 'lastModify' => date("Y/m/d H:i:s", filemtime($fileToShow)),
                 'creationDate' => date("Y/m/d H:i:s", filectime($fileToShow)),
                 'size' => filesize($fileToShow),
+                'extension' => "",
             ];
+
+            if (isset(pathinfo($fileToShow)['extension'])) {
+                $fileInfo->extension = pathinfo($fileToShow)['extension'];
+            }
 
             array_push($filesInfoArr, $fileInfo);
         }

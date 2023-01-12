@@ -16,6 +16,7 @@ if (file_exists($url_target) === true) {
         'lastModify' => date("Y/m/d H:i:s", filemtime($url_target)),
         'creationDate' => date("Y/m/d H:i:s", filectime($url_target)),
         'size' => filesize($url_target),
+        'extension' => pathinfo($url_target)['extension'],
     ];
 
     echo json_encode($fileInfo);

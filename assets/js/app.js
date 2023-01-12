@@ -10,6 +10,25 @@ const btnsConfirmDelete = document.querySelectorAll(
   ".modal-confirm-delete button"
 );
 
+const iconsFiles = {
+  folder: "fa-solid fa-folder",
+  openedFolder: "fa-solid fa-folder-open",
+  doc: "fa-solid fa-file-word",
+  csv: "fa-solid fa-file-csv",
+  jpg: "fa-solid fa-file-image",
+  png: "fa-light fa-file-image",
+  txt: "fa-solid fa-file-lines",
+  ppt: "fa-solid fa-presentation-screen",
+  odt: "fa-solid fa-file",
+  pdf: "fa-solid fa-file-pdf",
+  zip: "fa-solid fa-file-zipper",
+  rar: "fa-solid fa-file-exclamation",
+  exe: "fa-solid fa-file-excel",
+  svg: "fa-regular fa-file-lines",
+  mp3: "fa-solid fa-file-audio",
+  mp4: "fa-solid fa-file-video",
+};
+
 let currentFile;
 let beforeCurrentFile;
 let newName;
@@ -33,13 +52,15 @@ function uploadFile() {
   })
     .then((res) => res.json())
     .then((data) => {
+      console.log(data);
       if (typeof data === "object") {
         createElementsToShowFilesRoot(
           data.type,
           data.name,
           data.lastModify,
           data.creationDate,
-          data.size
+          data.size,
+          data.extension
         );
       } else {
         console.log(data);
@@ -60,7 +81,8 @@ function showFilesRoot() {
           file.name,
           file.lastModify,
           file.creationDate,
-          file.size
+          file.size,
+          file.extension
         );
       })
     );
@@ -71,7 +93,8 @@ function createElementsToShowFilesRoot(
   name,
   lastModify,
   creationDate,
-  size
+  size,
+  extension
 ) {
   let sizeTransformed;
   if (type === "dir") {
@@ -81,11 +104,20 @@ function createElementsToShowFilesRoot(
   } else {
     sizeTransformed = (size / 1000).toFixed(2) + " KB";
   }
-
+  let icon;
+  if (type === "dir") {
+    icon = iconsFiles.folder;
+  } else {
+    for (const iconType in iconsFiles) {
+      if (iconType === extension) {
+        icon = iconsFiles[iconType];
+      }
+    }
+  }
   filesBodyContainer.insertAdjacentHTML(
     "afterbegin",
-    `<div class="file">    
-            <i class="${type}"></i>
+    `<div class="file" data-extension=${extension}>    
+            <i class="${icon}"></i>
             <p class="name" data-name=${name}>${name}</p>
             <p>${lastModify}</p>
             <p>${creationDate}</p>
@@ -123,7 +155,6 @@ function deleteFile(currentFile) {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       let divToDelete = document.querySelector(
         `[data-name="${currentFile}"]`
       ).parentElement;
@@ -136,19 +167,24 @@ function createInput() {
   oldName = currentFile;
 
   let divRename = document.querySelector(`[data-name="${currentFile}"]`);
-  divRename.innerHTML =
-    "<input id='newName' type='text' name='newName'><button id='confirmChange'>OK</button>";
+  divRename.innerHTML = `<input id='newName' type='text' name='newName' value=${currentFile}><button id='confirmChange'>OK</button>`;
 
   const btnConfirmChange = document.getElementById("confirmChange");
-
   btnConfirmChange.addEventListener("click", obtainName);
 }
 
 function obtainName() {
   const inputNewName = document.getElementById("newName");
 
-  newName = inputNewName.value;
-  console.log(newName);
+  let divRename = document.querySelector(
+    `[data-name="${oldName}"]`
+  ).parentElement;
+
+  if (inputNewName.value.indexOf("." + divRename.dataset.extension) !== -1) {
+    newName = inputNewName.value;
+  } else {
+    newName = inputNewName.value + "." + divRename.dataset.extension;
+  }
 
   renameFile();
 }
