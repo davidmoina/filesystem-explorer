@@ -4,19 +4,25 @@ const btnNewFolder = document.getElementById("btnNewFolder");
 const filesBodyContainer = document.querySelector(".files-body");
 const trash = document.querySelector(".fa-trash-can");
 const btnEdit = document.getElementById("btnEdit");
+const modalConfirmDelete = document.querySelector(".modal-confirm-delete");
+const textConfirmDelete = document.querySelector(".modal-confirm-delete span");
+const btnsConfirmDelete = document.querySelectorAll(
+  ".modal-confirm-delete button"
+);
 
 let currentFile;
 let beforeCurrentFile;
 let newName;
 let oldName;
 
-btnEdit.addEventListener("click", createInput)
-
+btnEdit.addEventListener("click", createInput);
 window.addEventListener("load", showFilesRoot);
 btnUploadFile.addEventListener("change", uploadFile);
 trash.addEventListener("click", startDeleteFile);
 btnNewFolder.addEventListener("click", newFolder);
-
+for (let btn of btnsConfirmDelete) {
+  btn.addEventListener("click", confirmDimissDeleteFile);
+}
 function uploadFile() {
   let formData = new FormData();
   formData.append("fileData", btnUploadFile.files[0]);
@@ -67,6 +73,15 @@ function createElementsToShowFilesRoot(
   creationDate,
   size
 ) {
+  let sizeTransformed;
+  if (type === "dir") {
+    sizeTransformed = "";
+  } else if (size >= 1000000) {
+    sizeTransformed = (size / 1000000).toFixed(2) + " MB";
+  } else {
+    sizeTransformed = (size / 1000).toFixed(2) + " KB";
+  }
+
   filesBodyContainer.insertAdjacentHTML(
     "afterbegin",
     `<div class="file">    
@@ -74,8 +89,8 @@ function createElementsToShowFilesRoot(
             <p class="name" data-name=${name}>${name}</p>
             <p>${lastModify}</p>
             <p>${creationDate}</p>
-            <p>${size}</p>
-    </div>`
+            <p>${sizeTransformed}</p>
+            </div>`
   );
   document
     .querySelector(`[data-name="${name}"]`)
@@ -90,7 +105,16 @@ function newFolder() {
 }
 
 function startDeleteFile() {
-  deleteFile(currentFile);
+  fetch("modules/validationDelete.php" + "?" + "name=" + currentFile, {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data === "ok") {
+        textConfirmDelete.textContent = currentFile;
+        modalConfirmDelete.classList.add("modal-confirm-detele-active");
+      }
+    });
 }
 
 function deleteFile(currentFile) {
@@ -104,6 +128,7 @@ function deleteFile(currentFile) {
         `[data-name="${currentFile}"]`
       ).parentElement;
       divToDelete.remove();
+      modalConfirmDelete.classList.remove("modal-confirm-detele-active");
     });
 }
 
@@ -111,8 +136,9 @@ function createInput() {
   oldName = currentFile;
 
   let divRename = document.querySelector(`[data-name="${currentFile}"]`);
-  divRename.innerHTML = "<input id='newName' type='text' name='newName'><button id='confirmChange'>OK</button>";
-  
+  divRename.innerHTML =
+    "<input id='newName' type='text' name='newName'><button id='confirmChange'>OK</button>";
+
   const btnConfirmChange = document.getElementById("confirmChange");
 
   btnConfirmChange.addEventListener("click", obtainName);
@@ -120,7 +146,7 @@ function createInput() {
 
 function obtainName() {
   const inputNewName = document.getElementById("newName");
-    
+
   newName = inputNewName.value;
   console.log(newName);
 
@@ -129,27 +155,183 @@ function obtainName() {
 
 function renameFile() {
   console.log(currentFile);
-  fetch("modules/rename-files.php" + "?" + "name=" + oldName + "&" + "newName=" + newName, {
-    method: "GET"
-  })
-  .then(res => res.json())
-  .then(data => {
-    console.log(data);
+  fetch(
+    "modules/rename-files.php" +
+      "?" +
+      "name=" +
+      oldName +
+      "&" +
+      "newName=" +
+      newName,
+    {
+      method: "GET",
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
 
-    let divRename = document.querySelector(`[data-name="${oldName}"]`);
-    divRename.dataset.name = newName;
-    divRename.textContent = newName;
+      let divRename = document.querySelector(`[data-name="${oldName}"]`);
+      divRename.dataset.name = newName;
+      divRename.textContent = newName;
 
-    currentFile = newName;
-  })
+      currentFile = newName;
+    });
+}
 
+function createInput() {
+  oldName = currentFile;
+
+  let divRename = document.querySelector(`[data-name="${currentFile}"]`);
+  divRename.innerHTML =
+    "<input id='newName' type='text' name='newName'><button id='confirmChange'>OK</button>";
+
+  const btnConfirmChange = document.getElementById("confirmChange");
+
+  btnConfirmChange.addEventListener("click", obtainName);
+}
+
+function obtainName() {
+  const inputNewName = document.getElementById("newName");
+
+  newName = inputNewName.value;
+  console.log(newName);
+
+  renameFile();
+}
+
+function renameFile() {
+  console.log(currentFile);
+  fetch(
+    "modules/rename-files.php" +
+      "?" +
+      "name=" +
+      oldName +
+      "&" +
+      "newName=" +
+      newName,
+    {
+      method: "GET",
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+
+      let divRename = document.querySelector(`[data-name="${oldName}"]`);
+      divRename.dataset.name = newName;
+      divRename.textContent = newName;
+
+      currentFile = newName;
+    });
+}
+
+function createInput() {
+  oldName = currentFile;
+
+  let divRename = document.querySelector(`[data-name="${currentFile}"]`);
+  divRename.innerHTML =
+    "<input id='newName' type='text' name='newName'><button id='confirmChange'>OK</button>";
+
+  const btnConfirmChange = document.getElementById("confirmChange");
+
+  btnConfirmChange.addEventListener("click", obtainName);
+}
+
+function obtainName() {
+  const inputNewName = document.getElementById("newName");
+
+  newName = inputNewName.value;
+  console.log(newName);
+
+  renameFile();
+}
+
+function renameFile() {
+  console.log(currentFile);
+  fetch(
+    "modules/rename-files.php" +
+      "?" +
+      "name=" +
+      oldName +
+      "&" +
+      "newName=" +
+      newName,
+    {
+      method: "GET",
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+
+      let divRename = document.querySelector(`[data-name="${oldName}"]`);
+      divRename.dataset.name = newName;
+      divRename.textContent = newName;
+
+      currentFile = newName;
+    });
+}
+
+function createInput() {
+  oldName = currentFile;
+
+  let divRename = document.querySelector(`[data-name="${currentFile}"]`);
+  divRename.innerHTML =
+    "<input id='newName' type='text' name='newName'><button id='confirmChange'>OK</button>";
+
+  const btnConfirmChange = document.getElementById("confirmChange");
+
+  btnConfirmChange.addEventListener("click", obtainName);
+}
+
+function obtainName() {
+  const inputNewName = document.getElementById("newName");
+
+  newName = inputNewName.value;
+  console.log(newName);
+
+  renameFile();
+}
+
+function renameFile() {
+  console.log(currentFile);
+  fetch(
+    "modules/rename-files.php" +
+      "?" +
+      "name=" +
+      oldName +
+      "&" +
+      "newName=" +
+      newName,
+    {
+      method: "GET",
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+
+      let divRename = document.querySelector(`[data-name="${oldName}"]`);
+      divRename.dataset.name = newName;
+      divRename.textContent = newName;
+
+      currentFile = newName;
+    });
+}
+
+function confirmDimissDeleteFile(e) {
+  if (e.target.innerText === "No") {
+    modalConfirmDelete.classList.remove("modal-confirm-detele-active");
+  } else {
+    deleteFile(currentFile);
+  }
 }
 
 function handleFileOrFolder(e) {
   beforeCurrentFile = currentFile;
   currentFile = e.target.dataset.name;
-
-  if(e.target.id !== "newName" && e.target.id !== "confirmChange") {
+  if (e.target.id !== "newName" && e.target.id !== "confirmChange") {
     if (beforeCurrentFile !== currentFile) {
       document
         .querySelector(`[data-name="${currentFile}"]`)
@@ -166,6 +348,4 @@ function handleFileOrFolder(e) {
     }
     console.log(currentFile, beforeCurrentFile);
   }
-
-  
 }

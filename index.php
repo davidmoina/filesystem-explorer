@@ -58,6 +58,14 @@
         </section>
     </main>
 
+    <div class="modal-confirm-delete">
+        <p>The file <span></span> is going to be removed, do you want to move on?</p>
+        <div>
+            <button>Yes</button>
+            <button>No</button>
+        </div>
+    </div>
+
     <footer>
 
     </footer>

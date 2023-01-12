@@ -69,3 +69,31 @@
 .selected-file {
   background-color: royalblue;
 }
+
+.modal-confirm-delete {
+  width: 26vw;
+  height: 30vh;
+  padding: 1em;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  box-shadow: 1px 1px 2px black;
+  background-color: white;
+  position: absolute;
+  top: 15vh;
+  left: 37vw;
+  z-index: 2px;
+}
+
+.modal-confirm-delete button {
+  font-size: 1em;
+  width: 3em;
+  padding: 0.2em;
+  cursor: pointer;
+}
+
+.modal-confirm-detele-active {
+  display: flex;
+}
