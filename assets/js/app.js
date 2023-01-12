@@ -129,11 +129,38 @@ function createElementsToShowFilesRoot(
     .addEventListener("click", handleFileOrFolder);
 }
 
+let folderNumber = 0;
+
+if(localStorage.getItem("numFold")) {
+  folderNumber = parseInt(localStorage.getItem("numFold"));
+} else {
+  localStorage.setItem("numFold", folderNumber);
+};
+
 function newFolder() {
-  fetch("modules/create-folder.php", {
-    method: "POST",
-  });
-  // .then(res => res)
+  folderNumber+= 1;
+
+  fetch("modules/create-folder.php" + "?" + "foldNum=" + folderNumber, {
+    method: "GET",
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (typeof data === "object") {
+      createElementsToShowFilesRoot(
+        data.type,
+        data.name,
+        data.lastModify,
+        data.creationDate,
+        data.size,
+        data.extension
+      );
+    } else {
+      console.log(data);
+    }
+  })
+  
+  localStorage.setItem("numFold", folderNumber);
+  
 }
 
 function startDeleteFile() {
@@ -190,7 +217,6 @@ function obtainName() {
 }
 
 function renameFile() {
-  console.log(currentFile);
   fetch(
     "modules/rename-files.php" +
       "?" +

@@ -1,12 +1,22 @@
 <?php
 
+$numFolder = $_GET["foldNum"];
 $newFolder = "new_folder";
 $route = dirname(__DIR__) . "/root";
 $directory = str_replace('\\', '/', $route) . "/" . $newFolder;
 
-if (!is_dir($directory)) {
-    mkdir($directory);
-    echo "Folder created successfully";
-} else {
-    echo "The folder $directory already exist!";
-}
+$fold = $directory . $numFolder;
+
+mkdir($fold);
+
+$foldInfo = (object) [
+    'type' => filetype($fold),
+    'name' => $newFolder . $numFolder,
+    'lastModify' => date("Y/m/d H:i:s", filemtime($fold)),
+    'creationDate' => date("Y/m/d H:i:s", filectime($fold)),
+    'size' => filesize($fold),
+    'extension' => "",
+];
+
+echo json_encode($foldInfo)
+?>
