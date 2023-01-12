@@ -8,6 +8,9 @@ const btnEdit = document.getElementById("btnEdit");
 let currentFile;
 let beforeCurrentFile;
 let newName;
+let oldName;
+
+btnEdit.addEventListener("click", createInput)
 
 window.addEventListener("load", showFilesRoot);
 btnUploadFile.addEventListener("change", uploadFile);
@@ -66,14 +69,13 @@ function createElementsToShowFilesRoot(
 ) {
   filesBodyContainer.insertAdjacentHTML(
     "afterbegin",
-    `<div class="file">
-            <p class="name" data-name=${name}>
-            <i class="${type}"></i> ${name}
-            </p>
+    `<div class="file">    
+            <i class="${type}"></i>
+            <p class="name" data-name=${name}>${name}</p>
             <p>${lastModify}</p>
             <p>${creationDate}</p>
             <p>${size}</p>
-            </div>`
+    </div>`
   );
   document
     .querySelector(`[data-name="${name}"]`)
@@ -105,14 +107,40 @@ function deleteFile(currentFile) {
     });
 }
 
+function createInput() {
+  oldName = currentFile;
+
+  let divRename = document.querySelector(`[data-name="${currentFile}"]`);
+  divRename.innerHTML = "<input id='newName' type='text' name='newName'><button id='confirmChange'>OK</button>";
+  
+  const btnConfirmChange = document.getElementById("confirmChange");
+
+  btnConfirmChange.addEventListener("click", obtainName);
+}
+
+function obtainName() {
+  const inputNewName = document.getElementById("newName");
+    
+  newName = inputNewName.value;
+  console.log(newName);
+
+  renameFile();
+}
+
 function renameFile() {
-  fetch("modules/rename-files.php" + "?" + "name=" + currentFile + "&" + "new=" + newName, {
+  console.log(currentFile);
+  fetch("modules/rename-files.php" + "?" + "name=" + oldName + "&" + "newName=" + newName, {
     method: "GET"
   })
-  .then((res) => res.json())
+  .then(res => res.json())
   .then(data => {
     console.log(data);
+
+    let divRename = document.querySelector(`[data-name="${oldName}"]`);
+    divRename.dataset.name = newName;
+    divRename.textContent = newName;
   })
+
 }
 
 function handleFileOrFolder(e) {
