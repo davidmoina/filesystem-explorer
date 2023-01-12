@@ -139,6 +139,8 @@ function renameFile() {
     let divRename = document.querySelector(`[data-name="${oldName}"]`);
     divRename.dataset.name = newName;
     divRename.textContent = newName;
+
+    currentFile = newName;
   })
 
 }
@@ -146,19 +148,24 @@ function renameFile() {
 function handleFileOrFolder(e) {
   beforeCurrentFile = currentFile;
   currentFile = e.target.dataset.name;
-  if (beforeCurrentFile !== currentFile) {
-    document
-      .querySelector(`[data-name="${currentFile}"]`)
-      .parentElement.classList.add("selected-file");
-    if (beforeCurrentFile) {
+
+  if(e.target.id !== "newName" && e.target.id !== "confirmChange") {
+    if (beforeCurrentFile !== currentFile) {
       document
-        .querySelector(`[data-name="${beforeCurrentFile}"]`)
-        .parentElement.classList.remove("selected-file");
+        .querySelector(`[data-name="${currentFile}"]`)
+        .parentElement.classList.add("selected-file");
+      if (beforeCurrentFile) {
+        document
+          .querySelector(`[data-name="${beforeCurrentFile}"]`)
+          .parentElement.classList.remove("selected-file");
+      }
+    } else {
+      document
+        .querySelector(`[data-name="${currentFile}"]`)
+        .parentElement.classList.toggle("selected-file");
     }
-  } else {
-    document
-      .querySelector(`[data-name="${currentFile}"]`)
-      .parentElement.classList.toggle("selected-file");
+    console.log(currentFile, beforeCurrentFile);
   }
-  console.log(currentFile, beforeCurrentFile);
+
+  
 }
