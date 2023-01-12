@@ -3,9 +3,11 @@ const modalShowImg = document.querySelector(".modal-show-img");
 const btnNewFolder = document.getElementById("btnNewFolder");
 const filesBodyContainer = document.querySelector(".files-body");
 const trash = document.querySelector(".fa-trash-can");
+const btnEdit = document.getElementById("btnEdit");
 
 let currentFile;
 let beforeCurrentFile;
+let newName;
 
 window.addEventListener("load", showFilesRoot);
 btnUploadFile.addEventListener("change", uploadFile);
@@ -101,6 +103,16 @@ function deleteFile(currentFile) {
       ).parentElement;
       divToDelete.remove();
     });
+}
+
+function renameFile() {
+  fetch("modules/rename-files.php" + "?" + "name=" + currentFile + "&" + "new=" + newName, {
+    method: "GET"
+  })
+  .then((res) => res.json())
+  .then(data => {
+    console.log(data);
+  })
 }
 
 function handleFileOrFolder(e) {
