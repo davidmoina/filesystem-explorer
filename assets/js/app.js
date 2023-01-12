@@ -182,6 +182,7 @@ function deleteFile(currentFile) {
   })
     .then((res) => res.json())
     .then((data) => {
+      console.log(data);
       let divToDelete = document.querySelector(
         `[data-name="${currentFile}"]`
       ).parentElement;
