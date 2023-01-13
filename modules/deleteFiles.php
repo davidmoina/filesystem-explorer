@@ -15,4 +15,4 @@ if (file_exists($url_target) === false) {
     echo json_encode("The file $name has been deleted");
 }
 
-// echo json_encode(is_dir($url_target));
+?>

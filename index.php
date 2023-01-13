@@ -32,8 +32,8 @@
         <section class="files-display">
             <div class="menu-section">
                 <div>
-                    <i class="fa-solid fa-house"></i>
-                    <i class="fa-solid fa-left-long"></i>
+                    <i id="btnHome" class="fa-solid fa-house"></i>
+                    <i id="btnBack" class="fa-solid fa-left-long"></i>
                 </div>
                 <div>
                     <i class="fa-solid fa-trash-can"></i>
@@ -43,7 +43,7 @@
                     <i id="btnEdit" class="fa-solid fa-pen-to-square"></i>
                 </div>
             </div>
-            <div class="route-section">
+            <div id="routeSection" class="route-section">
                 <p>Home/</p>
             </div>
             <div class="files-header">

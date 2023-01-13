@@ -9,6 +9,14 @@ const textConfirmDelete = document.querySelector(".modal-confirm-delete span");
 const btnsConfirmDelete = document.querySelectorAll(
   ".modal-confirm-delete button"
 );
+const btnHome = document.getElementById("btnHome");
+const btnBack = document.getElementById("btnBack");
+
+let savedPath = ["/root"]
+
+let path;
+
+const routeSection = document.getElementById("routeSection");
 
 const iconsFiles = {
   folder: "fa-solid fa-folder",
@@ -33,6 +41,7 @@ let currentFile;
 let beforeCurrentFile;
 let newName;
 let oldName;
+let folder;
 
 let folderNumber = 0;
 
@@ -42,6 +51,8 @@ if (localStorage.getItem("numFold")) {
   localStorage.setItem("numFold", folderNumber);
 }
 
+btnBack.addEventListener("click", goBackDirectory)
+btnHome.addEventListener("click", goHome)
 btnEdit.addEventListener("click", createInput);
 window.addEventListener("load", showFilesRoot);
 btnUploadFile.addEventListener("change", uploadFile);
@@ -78,7 +89,7 @@ function uploadFile() {
 }
 
 function showFilesRoot() {
-  let path = "/root";
+  path = savedPath.join("/");
   fetch("modules/showFiles.php" + "?" + "path=" + path, {
     method: "GET",
   })
@@ -221,15 +232,7 @@ function obtainName() {
 
 function renameFile() {
   console.log(oldName, newName);
-  fetch(
-    "modules/rename-files.php" +
-      "?" +
-      "name=" +
-      oldName +
-      "&" +
-      "newName=" +
-      newName,
-    {
+  fetch("modules/rename-files.php" + "?" + "name=" + oldName + "&" + "newName=" + newName, {
       method: "GET",
     }
   )
@@ -272,5 +275,83 @@ function handleFileOrFolder(e) {
         .parentElement.classList.toggle("selected-file");
     }
     console.log(currentFile, beforeCurrentFile);
+
+    
+  }
+
+  e.target.addEventListener("dblclick", moveToDirectory)
+
+}
+
+function moveToDirectory() {
+  savedPath.push(currentFile);
+  path = savedPath.join("/");
+  fetch("modules/showFiles.php" + "?" + "path=" + path, {
+    method: "GET"
+  })
+  .then(res => res.json())
+  .then(data => {
+    folder = currentFile;
+    routeSection.innerHTML = `${path}`;
+    filesBodyContainer.innerHTML = "";
+    data.forEach((file) => {
+      createElementsToShowFilesRoot(
+        file.type,
+        file.name,
+        file.lastModify,
+        file.creationDate,
+        file.size,
+        file.extension
+      );
+    })
+  })
+}
+
+function goHome() {
+  path = "/root";
+  fetch("modules/showFiles.php" + "?" + "path=" + path, {
+    method: "GET"
+  })
+  .then(res => res.json())
+  .then(data => {
+    routeSection.innerHTML = `${path}`;
+    filesBodyContainer.innerHTML = "";
+    data.forEach((file) => {
+      createElementsToShowFilesRoot(
+        file.type,
+        file.name,
+        file.lastModify,
+        file.creationDate,
+        file.size,
+        file.extension
+      );
+    })
+  })
+}
+
+function goBackDirectory() {
+  let indexRoute = path.lastIndexOf(folder);
+  if(indexRoute !== -1) {
+    let backRoute = path.substring(0, indexRoute - 1);
+    path = backRoute;
+    fetch("modules/showFiles.php" + "?" + "path=" + path, {
+      method: "GET"
+    })
+    .then(res => res.json())
+    .then(data => {
+      folder = savedPath[savedPath.length - 2];
+      routeSection.innerHTML = `${path}`;
+      filesBodyContainer.innerHTML = "";
+      data.forEach((file) => {
+        createElementsToShowFilesRoot(
+          file.type,
+          file.name,
+          file.lastModify,
+          file.creationDate,
+          file.size,
+          file.extension
+        );
+      })
+    })
   }
 }
