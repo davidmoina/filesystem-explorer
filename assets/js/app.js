@@ -34,6 +34,14 @@ let beforeCurrentFile;
 let newName;
 let oldName;
 
+let folderNumber = 0;
+
+if (localStorage.getItem("numFold")) {
+  folderNumber = parseInt(localStorage.getItem("numFold"));
+} else {
+  localStorage.setItem("numFold", folderNumber);
+}
+
 btnEdit.addEventListener("click", createInput);
 window.addEventListener("load", showFilesRoot);
 btnUploadFile.addEventListener("change", uploadFile);
@@ -42,6 +50,7 @@ btnNewFolder.addEventListener("click", newFolder);
 for (let btn of btnsConfirmDelete) {
   btn.addEventListener("click", confirmDimissDeleteFile);
 }
+
 function uploadFile() {
   let formData = new FormData();
   formData.append("fileData", btnUploadFile.files[0]);
@@ -129,38 +138,29 @@ function createElementsToShowFilesRoot(
     .addEventListener("click", handleFileOrFolder);
 }
 
-let folderNumber = 0;
-
-if(localStorage.getItem("numFold")) {
-  folderNumber = parseInt(localStorage.getItem("numFold"));
-} else {
-  localStorage.setItem("numFold", folderNumber);
-};
-
 function newFolder() {
-  folderNumber+= 1;
+  folderNumber += 1;
 
   fetch("modules/create-folder.php" + "?" + "foldNum=" + folderNumber, {
     method: "GET",
   })
-  .then(res => res.json())
-  .then(data => {
-    if (typeof data === "object") {
-      createElementsToShowFilesRoot(
-        data.type,
-        data.name,
-        data.lastModify,
-        data.creationDate,
-        data.size,
-        data.extension
-      );
-    } else {
-      console.log(data);
-    }
-  })
-  
+    .then((res) => res.json())
+    .then((data) => {
+      if (typeof data === "object") {
+        createElementsToShowFilesRoot(
+          data.type,
+          data.name,
+          data.lastModify,
+          data.creationDate,
+          data.size,
+          data.extension
+        );
+      } else {
+        console.log(data);
+      }
+    });
+
   localStorage.setItem("numFold", folderNumber);
-  
 }
 
 function startDeleteFile() {
@@ -210,14 +210,17 @@ function obtainName() {
 
   if (inputNewName.value.indexOf("." + divRename.dataset.extension) !== -1) {
     newName = inputNewName.value;
-  } else {
+  } else if (divRename.dataset.extension !== "") {
     newName = inputNewName.value + "." + divRename.dataset.extension;
+  } else {
+    newName = inputNewName.value;
   }
 
   renameFile();
 }
 
 function renameFile() {
+  console.log(oldName, newName);
   fetch(
     "modules/rename-files.php" +
       "?" +
