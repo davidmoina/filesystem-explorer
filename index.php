@@ -15,7 +15,7 @@
         <div>
             <h1>Drive</h1>
         </div>
-        <div>
+        <div class="container-search">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" name="" id="" placeholder="Please enter some here">
         </div>
