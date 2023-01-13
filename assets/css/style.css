@@ -1,31 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Roboto";
+  background-color: #f4f6ff;
+  border-color: #127681;
 }
 
 .header {
+  width: 100%;
+  height: 8vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 30px;
+  padding: 10px 20px;
+}
+
+.header input {
+  height: 5vh;
+  width: 40vw;
+  border: none;
+  border-radius: 0px 5px 5px 0px;
+  border: 3px solid #127681;
+  border-left: none;
+}
+
+.header i {
+  padding: 1vh;
+  height: 5vh;
+  border-radius: 5px 0px 0px 5px;
+  border: 3px solid #127681;
+  border-right: none;
+  color: #127681;
+}
+
+.container-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main {
-  display: grid;
-  grid-template-columns: 3fr 7fr;
+  width: 100%;
+  height: 92vh;
+  display: flex;
 }
 
 .aside-menu {
+  width: 18%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  outline: 2px solid black;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 5px 8px 50vh 2px;
+}
+
+.aside-menu button,
+label {
+  border: none;
+  border-radius: 5px;
+  border: 3px solid #127681;
+  font-size: 1.3em;
+  height: 20%;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0em 0.4em;
 }
 
 .files-display {
-  padding: 10px;
-  outline: 2px solid black;
+  width: 82%;
+  height: 100%;
+  padding: 2px 20px;
+  /* outline: 2px solid black; */
 }
 
 .menu-section {
@@ -34,28 +85,32 @@
   border-bottom: 1px solid grey;
 }
 
+.menu-section i {
+  font-size: 1.5em;
+  padding: 0.1em 0.1em 0.3em 0.1em;
+}
+
 .route-section {
   border-bottom: 1px solid grey;
 }
 
 .files-header {
   display: flex;
-  gap: 20px;
 }
 
 .files-header p,
 .file p {
-  width: 100px;
+  width: 17%;
 }
 
 .files-header .name {
-  width: 500px;
+  width: 49%;
 }
 
 .files-body .file {
   display: flex;
   padding: 5px 0;
-  gap: 20px;
+  /* gap: 20px; */
 }
 
 .files-body .file .name {
