@@ -314,6 +314,7 @@ function goHome() {
   })
   .then(res => res.json())
   .then(data => {
+    savedPath = [path];
     routeSection.innerHTML = `${path}`;
     filesBodyContainer.innerHTML = "";
     data.forEach((file) => {
@@ -332,8 +333,8 @@ function goHome() {
 function goBackDirectory() {
   let indexRoute = path.lastIndexOf(folder);
   if(indexRoute !== -1) {
-    let backRoute = path.substring(0, indexRoute - 1);
-    path = backRoute;
+    savedPath.pop();
+    path = savedPath.join("/");
     fetch("modules/showFiles.php" + "?" + "path=" + path, {
       method: "GET"
     })
