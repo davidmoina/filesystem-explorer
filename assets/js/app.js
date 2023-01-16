@@ -233,8 +233,8 @@ function obtainName() {
 }
 
 function renameFile() {
-  console.log(oldName, newName);
-  fetch("modules/rename-files.php" + "?" + "name=" + oldName + "&" + "newName=" + newName, {
+  path = savedPath.join("/");
+  fetch("modules/rename-files.php" + "?" + "name=" + oldName + "&" + "newName=" + newName + "&" + "path=" + path, {
       method: "GET",
     }
   )
@@ -285,28 +285,30 @@ function handleFileOrFolder(e) {
 
 }
 
-function moveToDirectory() {
-  savedPath.push(currentFile);
-  path = savedPath.join("/");
-  fetch("modules/showFiles.php" + "?" + "path=" + path, {
-    method: "GET"
-  })
-  .then(res => res.json())
-  .then(data => {
-    folder = currentFile;
-    routeSection.innerHTML = `${path}`;
-    filesBodyContainer.innerHTML = "";
-    data.forEach((file) => {
-      createElementsToShowFilesRoot(
-        file.type,
-        file.name,
-        file.lastModify,
-        file.creationDate,
-        file.size,
-        file.extension
-      );
+function moveToDirectory(e) {
+  if(e.target.parentElement.dataset.extension === "") {
+    savedPath.push(currentFile);
+    path = savedPath.join("/");
+    fetch("modules/showFiles.php" + "?" + "path=" + path, {
+      method: "GET"
     })
-  })
+    .then(res => res.json())
+    .then(data => {
+      folder = currentFile;
+      routeSection.innerHTML = `${path}`;
+      filesBodyContainer.innerHTML = "";
+      data.forEach((file) => {
+        createElementsToShowFilesRoot(
+          file.type,
+          file.name,
+          file.lastModify,
+          file.creationDate,
+          file.size,
+          file.extension
+        );
+      })
+    })
+  }
 }
 
 function goHome() {
