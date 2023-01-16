@@ -17,7 +17,7 @@
         </div>
         <div class="container-search">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" name="" id="" placeholder="Please enter some here">
+            <input type="text" id="inputSearch" placeholder="Please enter some here">
         </div>
     </header>
 
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div id="routeSection" class="route-section">
-                <p id="folderRoute">/root</p>
+                <p>/root</p>
             </div>
             <div class="files-header">
                 <p class="name">Name</p>

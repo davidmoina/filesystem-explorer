@@ -222,6 +222,12 @@ p {
   user-select: none;
 }
 
+#folderEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* MODALS */
 
 .modal-confirm-delete,

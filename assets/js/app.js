@@ -12,6 +12,8 @@ const btnsConfirmDelete = document.querySelectorAll(
 );
 const btnHome = document.getElementById("btnHome");
 const btnBack = document.getElementById("btnBack");
+const searchIcon = document.querySelector(".fa-magnifying-glass");
+const inputSearch = document.getElementById("inputSearch");
 
 let savedPath = ["/root"];
 
@@ -20,7 +22,6 @@ let path;
 const routeSection = document.getElementById("routeSection");
 const modalDisplayFiles = document.querySelector(".modal-display-file");
 const displayFileOpened = document.getElementById("containerDisplayFileOpened");
-const folderRoute = document.getElementById("folderRoute");
 const closeModalDisplayFile = document.getElementById("closeModalDisplayFile");
 const nothingSelectedcontainer = document.querySelector(".nothing-selected");
 
@@ -59,12 +60,15 @@ if (localStorage.getItem("numFold")) {
 
 btnBack.addEventListener("click", goBackDirectory);
 btnHome.addEventListener("click", goHome);
-// btnEdit.addEventListener("click", createInput);
 window.addEventListener("load", showFilesRoot);
 btnUploadFile.addEventListener("change", uploadFile);
-// trash.addEventListener("click", startDeleteFile);
 btnNewFolder.addEventListener("click", newFolder);
 closeModalDisplayFile.addEventListener("click", closeModalOpenedFile);
+searchIcon.addEventListener("click", searchByName);
+inputSearch.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") inputSearch.blur();
+  searchByName();
+});
 for (let btn of btnsConfirmDelete) {
   btn.addEventListener("click", confirmDimissDeleteFile);
 }
@@ -496,4 +500,43 @@ function closeModalOpenedFile() {
   modalDisplayFiles.classList.remove("modal-display-file-active");
   document.querySelector("header").classList.remove("background-modal-active");
   document.querySelector("main").classList.remove("background-modal-active");
+}
+
+function searchByName() {
+  const textToSearch = inputSearch.value;
+  path = savedPath.join("/");
+
+  fetch(
+    "modules/searchByName.php" +
+      "?" +
+      "path=" +
+      path +
+      "&" +
+      "textToSearch=" +
+      textToSearch,
+    {
+      method: "GET",
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      routeSection.innerHTML = `Results of search into ${path.substring(1)}`;
+      if (data.length) {
+        filesBodyContainer.innerHTML = "";
+        data.forEach((file) => {
+          createElementsToShowFilesRoot(
+            file.type,
+            file.name,
+            file.lastModify,
+            file.creationDate,
+            file.size,
+            file.extension
+          );
+        });
+        showMenuSection(data[0].name);
+      } else {
+        filesBodyContainer.innerHTML =
+          "<div id='folderEmpty'><p>This folder is empty</p></div>";
+      }
+    });
 }
