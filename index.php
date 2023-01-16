@@ -35,7 +35,7 @@
                     <i class="fa-solid fa-house"></i>
                     <i class="fa-solid fa-left-long"></i>
                 </div>
-                <div>
+                <div class="nothing-selected">
                     <i class="fa-solid fa-trash-can"></i>
                     <i class="fa-solid fa-copy"></i>
                     <i class="fa-solid fa-scissors"></i>
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="route-section">
-                <p>Home/</p>
+                <p id="folderRoute">Home/</p>
             </div>
             <div class="files-header">
                 <p class="name">Name</p>
@@ -66,9 +66,16 @@
         </div>
     </div>
 
-    <footer>
+    <div class="modal-delete-done">
+    </div>
 
-    </footer>
+    <div class="modal-display-file">
+        <button id="closeModalDisplayFile">🗙</button>
+        <div id="containerDisplayFileOpened">
+
+        </div>
+    </div>
+
     <script src="./assets/js/app.js?v=<?php echo (rand()); ?>"></script>
 </body>
 
