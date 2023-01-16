@@ -177,7 +177,8 @@ function newFolder() {
 }
 
 function startDeleteFile() {
-  fetch("modules/validationDelete.php" + "?" + "name=" + currentFile, {
+  path = savedPath.join("/");
+  fetch("modules/validationDelete.php" + "?" + "name=" + currentFile + "&" + "path=" + path, {
     method: "GET",
   })
     .then((res) => res.json())
@@ -189,8 +190,9 @@ function startDeleteFile() {
     });
 }
 
-function deleteFile(currentFile) {
-  fetch("modules/deleteFiles.php" + "?" + "name=" + currentFile, {
+function deleteFile() {
+  path = savedPath.join("/");
+  fetch("modules/deleteFiles.php" + "?" + "name=" + currentFile + "&" + "path=" + path, {
     method: "GET",
   })
     .then((res) => res.json())

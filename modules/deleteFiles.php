@@ -1,8 +1,9 @@
 <?php
 
 $name = $_GET['name'];
+$path = $_GET["path"];
 
-$url_insert = dirname(__DIR__) . "/root";
+$url_insert = dirname(__DIR__) . $path;
 $url_target = str_replace('\\', '/', $url_insert) . '/' . $name;
 
 if(is_dir($url_target)) {
