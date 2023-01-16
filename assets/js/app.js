@@ -341,27 +341,33 @@ function handleFileOrFolder(e) {
   beforeCurrentFile = currentFile;
   currentFile = e.target.dataset.name;
   console.log(currentFile);
+  console.log(beforeCurrentFile);
   if (e.target.id !== "newName" && e.target.id !== "confirmChange") {
     if (beforeCurrentFile !== currentFile) {
       document
         .querySelector(`[data-name="${currentFile}"]`)
         .parentElement.classList.add("selected-file");
+      showMenuSection(currentFile);
       if (beforeCurrentFile) {
         document
           .querySelector(`[data-name="${beforeCurrentFile}"]`)
           .parentElement.classList.remove("selected-file");
+        showMenuSection(beforeCurrentFile);
       }
     } else {
       document
         .querySelector(`[data-name="${currentFile}"]`)
         .parentElement.classList.toggle("selected-file");
+      showMenuSection(currentFile);
     }
   }
+  showMenuSection(currentFile);
+}
 
+function showMenuSection(fileToSelect) {
   let containerCurrentFile = document.querySelector(
-    `[data-name="${currentFile}"]`
+    `[data-name="${fileToSelect}"]`
   ).parentElement;
-  console.log(containerCurrentFile);
   if (containerCurrentFile.className === "file") {
     nothingSelectedcontainer.classList.remove("nothing-selected-active");
     btnEdit.removeEventListener("click", createInput);
@@ -429,6 +435,7 @@ function moveToDirectory(e) {
             file.extension
           );
         });
+        showMenuSection(data[0].name);
       });
   }
 }
@@ -453,6 +460,7 @@ function goHome() {
           file.extension
         );
       });
+      showMenuSection(data[0].name);
     });
 }
 
@@ -479,6 +487,7 @@ function goBackDirectory() {
             file.extension
           );
         });
+        showMenuSection(data[0].name);
       });
   }
 }
