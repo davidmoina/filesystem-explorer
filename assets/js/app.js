@@ -63,10 +63,11 @@ for (let btn of btnsConfirmDelete) {
 }
 
 function uploadFile() {
+  path = savedPath.join("/");
   let formData = new FormData();
   formData.append("fileData", btnUploadFile.files[0]);
 
-  fetch("modules/uploadFile.php", {
+  fetch("modules/uploadFile.php" + "?" + "path=" + path, {
     method: "POST",
     body: formData,
   })
