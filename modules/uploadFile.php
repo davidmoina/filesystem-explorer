@@ -5,7 +5,6 @@ $file = $_FILES['fileData'];
 $url_insert = dirname(__DIR__) . $path;
 $url_target = str_replace('\\', '/', $url_insert) . '/' . $file['name'];
 
-
 if (file_exists($url_target) === true) {
     echo json_encode("The file " . $file['name'] . " already exist!");
 } else {
