@@ -151,8 +151,9 @@ function createElementsToShowFilesRoot(
 
 function newFolder() {
   folderNumber += 1;
+  path = savedPath.join("/");
 
-  fetch("modules/create-folder.php" + "?" + "foldNum=" + folderNumber, {
+  fetch("modules/create-folder.php" + "?" + "foldNum=" + folderNumber + "&" + "path=" + path, {
     method: "GET",
   })
     .then((res) => res.json())

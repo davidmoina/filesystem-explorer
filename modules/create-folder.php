@@ -1,8 +1,9 @@
 <?php
 
+$path = $_GET["path"];
 $numFolder = $_GET["foldNum"];
 $newFolder = "new_folder";
-$route = dirname(__DIR__) . "/root";
+$route = dirname(__DIR__) . $path;
 $directory = str_replace('\\', '/', $route) . "/" . $newFolder;
 
 $fold = $directory . $numFolder;
