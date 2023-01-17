@@ -62,7 +62,6 @@ let extension;
 
 let counter = 0;
 
-
 let folderNumber = 0;
 
 if (localStorage.getItem("numFold")) {
@@ -87,12 +86,31 @@ for (let btn of btnsConfirmDelete) {
   btn.addEventListener("click", confirmDimissDeleteFile);
 }
 
-btnMove.addEventListener("click", moveFiles);
+btnMove.addEventListener("click", () => {
+  copy = false;
+  showPasteIcon();
+  moveFiles();
+});
 btnPaste.addEventListener("click", pasteFiles);
 btnCopy.addEventListener("click", () => {
   copy = true;
+  showPasteIcon();
   moveFiles();
 });
+
+function showPasteIcon() {
+  if (counter === 0) {
+    btnPaste.classList.add("fa-paste-active");
+  } else {
+    btnPaste.classList.remove("fa-paste-active");
+    console.log(oldSrc);
+    console.log(newSrc);
+    if (oldSrc === newSrc) {
+      let divRename = document.querySelector(".moveFile");
+      divRename.classList.remove("moveFile");
+    }
+  }
+}
 
 function uploadFile() {
   path = savedPath.join("/");
@@ -464,6 +482,7 @@ function moveToDirectory(e) {
             file.extension
           );
         });
+
         showMenuSection(data[0].name);
       });
   }
@@ -489,6 +508,7 @@ function goHome() {
           file.extension
         );
       });
+
       showMenuSection(data[0].name);
     });
 }
@@ -516,6 +536,8 @@ function goBackDirectory() {
             file.extension
           );
         });
+        console.log(move);
+        console.log(copy);
         showMenuSection(data[0].name);
       });
   }
@@ -564,6 +586,7 @@ function searchByName() {
             file.extension
           );
         });
+
         showMenuSection(data[0].name);
       } else {
         filesBodyContainer.innerHTML =
@@ -576,14 +599,14 @@ function moveFiles() {
   path = savedPath.join("/");
   let divRename = document.querySelector(`[data-name="${currentFile}"]`);
 
-  if(counter === 0) {
+  if (counter === 0) {
     divRename.parentElement.classList.add("moveFile");
     extension = divRename.parentElement.dataset.extension;
     fileToMove = divRename.dataset.name;
     nameFileToMove = fileToMove.split(".")[0];
     oldSrc = path;
-    counter ++;
-    return
+    counter++;
+    return;
   } else {
     divRename.parentElement.classList.remove("moveFile");
     counter = 0;
@@ -594,26 +617,58 @@ function moveFiles() {
 }
 
 function pasteFiles() {
-
   path = savedPath.join("/");
   newSrc = path;
 
-  fetch("modules/move-files.php" + "?" + "oldSrc=" + oldSrc + "&" + "newSrc=" + newSrc + "&" + "name=" + fileToMove + "&" + "mode=" + copy + "&" + "onlyName=" + nameFileToMove + "&" + "extension=" + extension + "&" + "path=" + path, {
-    method: "GET"
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (typeof data === "object") {
-      createElementsToShowFilesRoot(
-        data.type,
-        data.name,
-        data.lastModify,
-        data.creationDate,
-        data.size,
-        data.extension
-      );
-    } else {
-      console.log(data);
+  showPasteIcon();
+  counter = 0;
+
+  fetch(
+    "modules/move-files.php" +
+      "?" +
+      "oldSrc=" +
+      oldSrc +
+      "&" +
+      "newSrc=" +
+      newSrc +
+      "&" +
+      "name=" +
+      fileToMove +
+      "&" +
+      "mode=" +
+      copy +
+      "&" +
+      "onlyName=" +
+      nameFileToMove +
+      "&" +
+      "extension=" +
+      extension +
+      "&" +
+      "path=" +
+      path,
+    {
+      method: "GET",
     }
-  })
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      if (copy !== true && oldSrc === newSrc) {
+        let divToDelete = document.querySelector(
+          `[data-name="${fileToMove}"]`
+        ).parentElement;
+        divToDelete.remove();
+      }
+      if (typeof data === "object") {
+        createElementsToShowFilesRoot(
+          data.type,
+          data.name,
+          data.lastModify,
+          data.creationDate,
+          data.size,
+          data.extension
+        );
+      } else {
+        console.log(data);
+      }
+    });
 }

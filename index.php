@@ -31,17 +31,18 @@
 
         <section class="files-display">
             <div class="menu-section">
-                <div>
+                <div class="homeBack">
                     <i id="btnHome" class="fa-solid fa-house"></i>
                     <i id="btnBack" class="fa-solid fa-left-long"></i>
                 </div>
-                <i id="btnPaste" class="fa-solid fa-paste"></i>
-                <div class="nothing-selected">
-                    <i class="fa-solid fa-trash-can"></i>
-                    <i id="btnCopy" class="fa-solid fa-copy"></i>
-                    <i id="btnMove" class="fa-solid fa-scissors"></i>
-                    
-                    <i id="btnEdit" class="fa-solid fa-pen-to-square"></i>
+                <div class="container-features">
+                    <i id="btnPaste" class="fa-solid fa-paste"></i>
+                    <div class="nothing-selected">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <i id="btnCopy" class="fa-solid fa-copy"></i>
+                        <i id="btnMove" class="fa-solid fa-scissors"></i>
+                        <i id="btnEdit" class="fa-solid fa-pen-to-square"></i>
+                    </div>
                 </div>
             </div>
             <div id="routeSection" class="route-section">

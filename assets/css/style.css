@@ -7,6 +7,7 @@
   --icons-color: #127681;
   --light-color: #f3c62325;
   --lines-color: #393e4617;
+  --move-file: #f3c623e0;
 }
 
 * {
@@ -114,8 +115,16 @@ label:hover {
 .menu-section i {
   font-size: 1.5em;
   padding: 0.1em 0.1em 0.3em 0.1em;
-  color: var(--icons-color);
   cursor: pointer;
+}
+
+.homeBack i {
+  color: var(--icons-color);
+}
+
+.container-features {
+  display: flex;
+  justify-content: space-between;
 }
 
 .nothing-selected i {
@@ -124,6 +133,17 @@ label:hover {
 }
 
 .nothing-selected-active i {
+  color: var(--icons-color);
+  cursor: pointer;
+}
+
+.fa-paste {
+  color: var(--light-color);
+  cursor: not-allowed;
+  margin-right: 3px;
+}
+
+.fa-paste-active {
   color: var(--icons-color);
   cursor: pointer;
 }
@@ -339,5 +359,5 @@ audio::-webkit-media-controls-panel {
 }
 
 .moveFile {
-  background-color: aqua !important;
+  background-color: var(--move-file) !important;
 }
