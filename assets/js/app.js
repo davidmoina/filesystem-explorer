@@ -2,14 +2,14 @@ const btnUploadFile = document.getElementById("btnUploadFile");
 const modalShowImg = document.querySelector(".modal-show-img");
 const btnNewFolder = document.getElementById("btnNewFolder");
 const filesBodyContainer = document.querySelector(".files-body");
-const trash = document.querySelector(".fa-trash-can");
+const trash = document.getElementById("btnDelete");
 const btnEdit = document.getElementById("btnEdit");
 const modalConfirmDelete = document.querySelector(".modal-confirm-delete");
 const textConfirmDelete = document.querySelector(".modal-confirm-delete span");
 const modaldeleteDone = document.querySelector(".modal-delete-done");
-const btnsConfirmDelete = document.querySelectorAll(
-  ".modal-confirm-delete button"
-);
+const btnsConfirmDelete = document.querySelectorAll(".modal-confirm-delete button");
+const definitelyDelete = document.getElementById("definitelyDelete");
+
 const btnHome = document.getElementById("btnHome");
 const btnBack = document.getElementById("btnBack");
 const searchIcon = document.querySelector(".fa-magnifying-glass");
@@ -17,6 +17,7 @@ const inputSearch = document.getElementById("inputSearch");
 const btnMove = document.getElementById("btnMove");
 const btnPaste = document.getElementById("btnPaste");
 const btnCopy = document.getElementById("btnCopy");
+const btnRecycleBin = document.getElementById("btnRecycleBin");
 
 let savedPath = ["/root"];
 
@@ -79,7 +80,6 @@ closeModalDisplayFile.addEventListener("click", closeModalOpenedFile);
 searchIcon.addEventListener("click", searchByName);
 inputSearch.addEventListener("keyup", (e) => {
   if (e.key === "Enter") inputSearch.blur();
-
   searchByName();
 });
 for (let btn of btnsConfirmDelete) {
@@ -97,6 +97,9 @@ btnCopy.addEventListener("click", () => {
   showPasteIcon();
   moveFiles();
 });
+
+btnRecycleBin.addEventListener("click", showRecycleBin);
+
 
 function showPasteIcon() {
   if (counter === 0) {
@@ -268,6 +271,11 @@ function startDeleteFile() {
     .then((data) => {
       if (data === "ok") {
         textConfirmDelete.textContent = currentFile;
+        definitelyDelete.innerText = "DEFINITELY";
+        if(path.indexOf("/trash") === -1) {
+          definitelyDelete.innerText = ""
+        }
+  
         modalConfirmDelete.classList.add("modal-confirm-detele-active");
       }
     });
@@ -275,8 +283,14 @@ function startDeleteFile() {
 
 function deleteFile() {
   path = savedPath.join("/");
+  let location = "modules/deleteFiles.php";
+
+  if(path.indexOf("/trash") === -1) {
+    location = "modules/trash-files.php"
+  }
+
   fetch(
-    "modules/deleteFiles.php" +
+    location +
       "?" +
       "name=" +
       currentFile +
@@ -300,6 +314,7 @@ function deleteFile() {
       ).parentElement;
       divToDelete.remove();
       modalConfirmDelete.classList.remove("modal-confirm-detele-active");
+      console.log(data);
     });
 }
 
@@ -490,6 +505,7 @@ function moveToDirectory(e) {
 
 function goHome() {
   path = "/root";
+  savedPath = [path];
   fetch("modules/showFiles.php" + "?" + "path=" + path, {
     method: "GET",
   })
@@ -671,4 +687,29 @@ function pasteFiles() {
         console.log(data);
       }
     });
+}
+
+function showRecycleBin() {
+  savedPath = ["/trash"];
+  path = "/trash"
+  fetch("modules/showFiles.php" + "?" + "path=" + path, {
+    method: "GET"
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    routeSection.innerHTML = `${path}`;
+    filesBodyContainer.innerHTML = "";
+
+    data.forEach((file) => {
+      createElementsToShowFilesRoot(
+        file.type,
+        file.name,
+        file.lastModify,
+        file.creationDate,
+        file.size,
+        file.extension
+      );
+    });
+  })
 }

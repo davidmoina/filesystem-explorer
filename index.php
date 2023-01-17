@@ -26,6 +26,7 @@
             <button id="btnNewFolder"><i class="fa-solid fa-folder-plus"></i> New folder</button>
             <label for="btnUploadFile"><i class="fa-solid fa-file-arrow-up"></i> Upload file</label>
             <input type="file" name="fileData" id="btnUploadFile">
+            <button id="btnRecycleBin"><i class="fa-regular fa-trash-can"></i> Recycle Bin</button>
 
         </aside>
 
@@ -38,7 +39,7 @@
                 <div class="container-features">
                     <i id="btnPaste" class="fa-solid fa-paste"></i>
                     <div class="nothing-selected">
-                        <i class="fa-solid fa-trash-can"></i>
+                        <i id="btnDelete" class="fa-solid fa-trash-can"></i>
                         <i id="btnCopy" class="fa-solid fa-copy"></i>
                         <i id="btnMove" class="fa-solid fa-scissors"></i>
                         <i id="btnEdit" class="fa-solid fa-pen-to-square"></i>
@@ -61,7 +62,7 @@
     </main>
 
     <div class="modal-confirm-delete">
-        <p>The file <span></span> is going to be removed, do you want to move on?</p>
+        <p>The file <span></span> is going to be removed <span id="definitelyDelete"></span>, do you want to move on?</p>
         <div>
             <button>Yes</button>
             <button>No</button>
