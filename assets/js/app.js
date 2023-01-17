@@ -7,7 +7,9 @@ const btnEdit = document.getElementById("btnEdit");
 const modalConfirmDelete = document.querySelector(".modal-confirm-delete");
 const textConfirmDelete = document.querySelector(".modal-confirm-delete span");
 const modaldeleteDone = document.querySelector(".modal-delete-done");
-const btnsConfirmDelete = document.querySelectorAll(".modal-confirm-delete button");
+const btnsConfirmDelete = document.querySelectorAll(
+  ".modal-confirm-delete button"
+);
 const definitelyDelete = document.getElementById("definitelyDelete");
 
 const btnHome = document.getElementById("btnHome");
@@ -99,7 +101,6 @@ btnCopy.addEventListener("click", () => {
 });
 
 btnRecycleBin.addEventListener("click", showRecycleBin);
-
 
 function showPasteIcon() {
   if (counter === 0) {
@@ -272,10 +273,10 @@ function startDeleteFile() {
       if (data === "ok") {
         textConfirmDelete.textContent = currentFile;
         definitelyDelete.innerText = "DEFINITELY";
-        if(path.indexOf("/trash") === -1) {
-          definitelyDelete.innerText = ""
+        if (path.indexOf("/trash") === -1) {
+          definitelyDelete.innerText = "";
         }
-  
+
         modalConfirmDelete.classList.add("modal-confirm-detele-active");
       }
     });
@@ -285,22 +286,13 @@ function deleteFile() {
   path = savedPath.join("/");
   let location = "modules/deleteFiles.php";
 
-  if(path.indexOf("/trash") === -1) {
-    location = "modules/trash-files.php"
+  if (path.indexOf("/trash") === -1) {
+    location = "modules/trash-files.php";
   }
 
-  fetch(
-    location +
-      "?" +
-      "name=" +
-      currentFile +
-      "&" +
-      "path=" +
-      path,
-    {
-      method: "GET",
-    }
-  )
+  fetch(location + "?" + "name=" + currentFile + "&" + "path=" + path, {
+    method: "GET",
+  })
     .then((res) => res.json())
     .then((data) => {
       modaldeleteDone.innerHTML = `<i class="fa-regular fa-circle-check"></i> ${data}`;
@@ -457,6 +449,14 @@ function openFile(e) {
       .then((res) => res.json())
       .then((data) => {
         displayFileOpened.innerHTML = data;
+      });
+  } else if (extension === "csv") {
+    fetch("modules/openCsvFile.php" + "?" + "path=" + src, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        displayFileOpened.innerHTML = data.join("");
       });
   } else if (extension !== "") {
     displayFileOpened.innerHTML = `You should open a suitable application to read ${extension.toUpperCase()} files`;
@@ -691,25 +691,24 @@ function pasteFiles() {
 
 function showRecycleBin() {
   savedPath = ["/trash"];
-  path = "/trash"
+  path = "/trash";
   fetch("modules/showFiles.php" + "?" + "path=" + path, {
-    method: "GET"
+    method: "GET",
   })
-  .then(res => res.json())
-  .then(data => {
+    .then((res) => res.json())
+    .then((data) => {
+      routeSection.innerHTML = `${path}`;
+      filesBodyContainer.innerHTML = "";
 
-    routeSection.innerHTML = `${path}`;
-    filesBodyContainer.innerHTML = "";
-
-    data.forEach((file) => {
-      createElementsToShowFilesRoot(
-        file.type,
-        file.name,
-        file.lastModify,
-        file.creationDate,
-        file.size,
-        file.extension
-      );
+      data.forEach((file) => {
+        createElementsToShowFilesRoot(
+          file.type,
+          file.name,
+          file.lastModify,
+          file.creationDate,
+          file.size,
+          file.extension
+        );
+      });
     });
-  })
 }

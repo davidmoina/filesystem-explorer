@@ -66,8 +66,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  padding: 5px 8px 50vh 2px;
+  justify-content: flex-start;
+  padding: 5px 8px 10px 2px;
 }
 
 .aside-menu i {
@@ -81,13 +81,19 @@ label {
   border-radius: 40px;
   border: 1px solid var(--icons-color);
   font-size: 1.3em;
-  height: 20%;
+  height: 10%;
   width: 80%;
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding: 0em 0.4em;
   cursor: pointer;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+#btnRecycleBin {
+  margin-top: 45vh;
 }
 
 .aside-menu button:hover,
@@ -360,4 +366,8 @@ audio::-webkit-media-controls-panel {
 
 .moveFile {
   background-color: var(--move-file) !important;
+}
+
+table {
+  width: 70vw;
 }

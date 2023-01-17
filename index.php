@@ -23,9 +23,11 @@
 
     <main class="main">
         <aside class="aside-menu">
+
             <button id="btnNewFolder"><i class="fa-solid fa-folder-plus"></i> New folder</button>
             <label for="btnUploadFile"><i class="fa-solid fa-file-arrow-up"></i> Upload file</label>
             <input type="file" name="fileData" id="btnUploadFile">
+
             <button id="btnRecycleBin"><i class="fa-regular fa-trash-can"></i> Recycle Bin</button>
 
         </aside>
