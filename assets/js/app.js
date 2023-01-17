@@ -67,6 +67,7 @@ closeModalDisplayFile.addEventListener("click", closeModalOpenedFile);
 searchIcon.addEventListener("click", searchByName);
 inputSearch.addEventListener("keyup", (e) => {
   if (e.key === "Enter") inputSearch.blur();
+
   searchByName();
 });
 for (let btn of btnsConfirmDelete) {
@@ -419,6 +420,9 @@ function openFile(e) {
 
 function moveToDirectory(e) {
   if (e.target.parentElement.dataset.extension === "") {
+    if (currentFile.substring(0, 1) === "/") {
+      currentFile = currentFile.substring(1);
+    }
     savedPath.push(currentFile);
     path = savedPath.join("/");
     fetch("modules/showFiles.php" + "?" + "path=" + path, {
@@ -428,6 +432,7 @@ function moveToDirectory(e) {
       .then((data) => {
         folder = currentFile;
         routeSection.innerHTML = `${path}`;
+
         filesBodyContainer.innerHTML = "";
         data.forEach((file) => {
           createElementsToShowFilesRoot(
@@ -500,11 +505,13 @@ function closeModalOpenedFile() {
   modalDisplayFiles.classList.remove("modal-display-file-active");
   document.querySelector("header").classList.remove("background-modal-active");
   document.querySelector("main").classList.remove("background-modal-active");
+  displayFileOpened.innerHTML = "";
 }
 
 function searchByName() {
   const textToSearch = inputSearch.value;
   path = savedPath.join("/");
+  console.log(path);
 
   fetch(
     "modules/searchByName.php" +
@@ -524,9 +531,13 @@ function searchByName() {
       if (data.length) {
         filesBodyContainer.innerHTML = "";
         data.forEach((file) => {
+          let pathFile = file.path.substring(path.length);
+          if (pathFile !== "") {
+            pathFile += "/";
+          }
           createElementsToShowFilesRoot(
             file.type,
-            file.name,
+            pathFile + file.name,
             file.lastModify,
             file.creationDate,
             file.size,
