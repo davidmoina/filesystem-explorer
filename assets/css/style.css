@@ -328,3 +328,7 @@ audio::-webkit-media-controls-panel {
 .background-modal-active {
   filter: blur(5px);
 }
+
+.moveFile {
+  background-color: aqua !important;
+}
