@@ -3,6 +3,7 @@
 :root {
   --bg-color: #f4f6ff;
   --text-color: #10375c;
+  --text-color-light: #10375cdf;
   --icons-color: #127681;
   --light-color: #f3c62325;
   --lines-color: #393e4617;
@@ -29,10 +30,12 @@
 .header input {
   height: 5vh;
   width: 40vw;
-
-  /* border-radius: 0px 5px 5px 0px; */
   border: 1px solid var(--icons-color);
   border-left: none;
+}
+
+.header input::placeholder {
+  color: var(--text-color-light);
 }
 
 .header i {
@@ -156,7 +159,7 @@ label:hover {
 
 .file p {
   font-size: 13px;
-  color: rgba(0, 0, 0, 0.726);
+  color: var(--text-color-light);
   background-color: transparent;
 }
 
