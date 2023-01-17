@@ -14,10 +14,15 @@ const btnHome = document.getElementById("btnHome");
 const btnBack = document.getElementById("btnBack");
 const searchIcon = document.querySelector(".fa-magnifying-glass");
 const inputSearch = document.getElementById("inputSearch");
+const btnMove = document.getElementById("btnMove");
+const btnPaste = document.getElementById("btnPaste");
+const btnCopy = document.getElementById("btnCopy");
 
 let savedPath = ["/root"];
 
 let path;
+let move = false;
+let copy = false;
 
 const routeSection = document.getElementById("routeSection");
 const modalDisplayFiles = document.querySelector(".modal-display-file");
@@ -49,6 +54,14 @@ let beforeCurrentFile;
 let newName;
 let oldName;
 let folder;
+let oldSrc;
+let newSrc;
+let fileToMove;
+let nameFileToMove;
+let extension;
+
+let counter = 0;
+
 
 let folderNumber = 0;
 
@@ -73,6 +86,13 @@ inputSearch.addEventListener("keyup", (e) => {
 for (let btn of btnsConfirmDelete) {
   btn.addEventListener("click", confirmDimissDeleteFile);
 }
+
+btnMove.addEventListener("click", moveFiles);
+btnPaste.addEventListener("click", pasteFiles);
+btnCopy.addEventListener("click", () => {
+  copy = true;
+  moveFiles();
+});
 
 function uploadFile() {
   path = savedPath.join("/");
@@ -550,4 +570,50 @@ function searchByName() {
           "<div id='folderEmpty'><p>This folder is empty</p></div>";
       }
     });
+}
+
+function moveFiles() {
+  path = savedPath.join("/");
+  let divRename = document.querySelector(`[data-name="${currentFile}"]`);
+
+  if(counter === 0) {
+    divRename.parentElement.classList.add("moveFile");
+    extension = divRename.parentElement.dataset.extension;
+    fileToMove = divRename.dataset.name;
+    nameFileToMove = fileToMove.split(".")[0];
+    oldSrc = path;
+    counter ++;
+    return
+  } else {
+    divRename.parentElement.classList.remove("moveFile");
+    counter = 0;
+    oldSrc = null;
+    fileToMove = null;
+    console.log(oldSrc);
+  }
+}
+
+function pasteFiles() {
+
+  path = savedPath.join("/");
+  newSrc = path;
+
+  fetch("modules/move-files.php" + "?" + "oldSrc=" + oldSrc + "&" + "newSrc=" + newSrc + "&" + "name=" + fileToMove + "&" + "mode=" + copy + "&" + "onlyName=" + nameFileToMove + "&" + "extension=" + extension + "&" + "path=" + path, {
+    method: "GET"
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (typeof data === "object") {
+      createElementsToShowFilesRoot(
+        data.type,
+        data.name,
+        data.lastModify,
+        data.creationDate,
+        data.size,
+        data.extension
+      );
+    } else {
+      console.log(data);
+    }
+  })
 }
