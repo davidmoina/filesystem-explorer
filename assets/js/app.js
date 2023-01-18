@@ -107,8 +107,7 @@ function showPasteIcon() {
     btnPaste.classList.add("fa-paste-active");
   } else {
     btnPaste.classList.remove("fa-paste-active");
-    console.log(oldSrc);
-    console.log(newSrc);
+
     if (oldSrc === newSrc) {
       let divRename = document.querySelector(".moveFile");
       divRename.classList.remove("moveFile");
@@ -141,7 +140,7 @@ function uploadFile() {
           data.extension
         );
       } else {
-        console.log(data);
+        console.error(data);
       }
     });
 }
@@ -247,7 +246,7 @@ function newFolder() {
           data.extension
         );
       } else {
-        console.log(data);
+        console.error(data);
       }
     });
 
@@ -306,7 +305,6 @@ function deleteFile() {
       ).parentElement;
       divToDelete.remove();
       modalConfirmDelete.classList.remove("modal-confirm-detele-active");
-      console.log(data);
     });
 }
 
@@ -369,8 +367,6 @@ function renameFile() {
   )
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
-
       let divRename = document.querySelector(`[data-name="${oldName}"]`);
       divRename.dataset.name = newName;
       divRename.textContent = newName;
@@ -390,8 +386,7 @@ function confirmDimissDeleteFile(e) {
 function handleFileOrFolder(e) {
   beforeCurrentFile = currentFile;
   currentFile = e.target.dataset.name;
-  console.log(currentFile);
-  console.log(beforeCurrentFile);
+
   if (e.target.id !== "newName" && e.target.id !== "confirmChange") {
     if (beforeCurrentFile !== currentFile) {
       document
@@ -552,8 +547,7 @@ function goBackDirectory() {
             file.extension
           );
         });
-        console.log(move);
-        console.log(copy);
+
         showMenuSection(data[0].name);
       });
   }
@@ -569,7 +563,6 @@ function closeModalOpenedFile() {
 function searchByName() {
   const textToSearch = inputSearch.value;
   path = savedPath.join("/");
-  console.log(path);
 
   fetch(
     "modules/searchByName.php" +
@@ -628,7 +621,6 @@ function moveFiles() {
     counter = 0;
     oldSrc = null;
     fileToMove = null;
-    console.log(oldSrc);
   }
 }
 
@@ -684,7 +676,7 @@ function pasteFiles() {
           data.extension
         );
       } else {
-        console.log(data);
+        console.error(data);
       }
     });
 }

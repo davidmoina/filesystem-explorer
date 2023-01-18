@@ -42,7 +42,6 @@
 .header i {
   padding: 1vh;
   height: 5vh;
-  /* border-radius: 5px 0px 0px 5px; */
   border: 1px solid var(--icons-color);
   border-right: none;
   color: var(--icons-color);
@@ -52,6 +51,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.container-search i {
+  cursor: pointer;
 }
 
 .main {
@@ -107,7 +110,6 @@ label:hover {
   width: 82%;
   height: 100%;
   padding: 2px 20px;
-  /* outline: 2px solid black; */
 }
 
 .menu-section {
