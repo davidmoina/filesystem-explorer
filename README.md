@@ -1,60 +1,124 @@
-`#html` `#css` `#js` `#php` `#master-in-software-development`
+`#html`  `#css`  `#js`  `#php`  `#master-in-software-development`
+
+  
 
 # PHP Local FileSystem explorer <!-- omit in toc -->
 
+  
+
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
+
+<img  alt="Version"  src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000"  />
+
 </p>
 
->In this project you will have to create a system file explorer that allows the user to navigate, create directories and upload files in the same way as he would in his usual operating system. 
+  
 
->The file explorer is a tool that allows you to directly view and manipulate the files and directories associated with a path, so you must take into account from which path the user starts and which path they can access.
-
+>In this project we create a system file explorer that allows the user to navigate, create directories and upload files in the same way as he would in his usual operating system.
+  
 
 ## Index <!-- omit in toc -->
 
+  
+
 - [Requirements](#requirements)
-- [Repository](#repository)
+
+- [Lessons Learned](#repository)
+
 - [Technologies used](#technologies-used)
-- [Project delivery](#project-delivery)
+
 - [Resources](#resources)
+
+  
 
 ## Requirements
 
-- You cannot use file third-party libraries
-- You will not be able to use global variables in PHP.
-- You must use GIT
-- You must use the PHP > v8
-- Create a clear and orderly directory structure
-- Both the code and the comments must be written in English
-- Use the camelCase code style to define variables and functions
-- In the case of using HTML, never use inline styles
-- In the case of using different programming languages ​​always define the implementation in separate terms
-- Remember that it is important to divide the tasks into several sub-tasks so that in this way you can associate each particular step of the construction with a specific commit
-- You should try as much as possible that the commits and the planned tasks are the same
-Delete files that are not used or are not necessary to evaluate the project
+  
 
-## Repository
 
-First of all you must fork this project into your GitHub account.
+-   Not used $GLOBALS variable.
+    
+-   Used GIT.
+    
+-   Used the PHP > v8.
+    
+-   Clear and ordered directory structure.
+    
+-   Code and comments written in English.
+    
+-   Used the camelCase code style to define variables and functions.
+    
+-   Never used inline styles.
+    
+-   Tasks divided into several sub-tasks associated with a specific commit.
+    
+-   Tried that the commits and the planned tasks are the same.
+    
 
-To create a fork on GitHub is as easy as clicking the “fork” button on the repository page.
+Deleted files and comments that are not used or are not necessary.
 
-<img src="https://docs.github.com/assets/cb-23088/images/help/repository/fork_button.png" alt="Fork on GitHub" width='450'>
+  
+
+## Lessons Learned
+
+
+-   Improve the knowledge of php.
+    
+-   Send and receive information through promises (fetch in this case).
+    
+-   How to get the information of a file with the variable $_FILES.
+    
+-   Improve knowledge of recursive functions.
+    
+-   Move files between different directories.
+    
+-   Create a script to open different types of files on screen.
+    
+-   Create folders.
+    
+-   Rename files.
+    
+-   Delete files and folders with all their content.
+    
+-   How to move deleted files to a trash can.
+    
+-   Use clickup and split tasks between the team.
+
+  
 
 ## Technologies used
 
+  
+
 \* HTML
+
+  
 
 \* CSS
 
+  
+
 \* JS
+
+  
 
 \* PHP
 
+  
+
 ## Resources
 
+  
+
 - [File system](https://es.wikipedia.org/wiki/Administrador_de_archivos)
+
 - [PHP FileSystem W3C](https://www.w3schools.com/php/php_ref_filesystem.asp)
+
 - [PHP FileSystem Oficial](https://www.php.net/manual/es/book.filesystem.php)
+
 - [README Guidelines Example](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
+
+## Autors
+* **[David Moina](https://github.com/davidmoina)**
+* **[Isaura Martí](https://github.com/imarti01)**
+
